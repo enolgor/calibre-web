@@ -299,7 +299,7 @@ def copyToDrive(drive, uploadFile, createRoot, replaceFiles,
     if not parent:
         parent = getEbooksFolder(drive)
     if os.path.isdir(os.path.join(prevDir,uploadFile)):
-        existingFolder = drive.ListFile({'q': "title = '%s' and '%s' in parents and trashed = false" % (os.path.basename(uploadFile), parent['id'])}).GetList()
+        existingFolder = drive.ListFile({'q': "title = \"%s\" and \"%s\" in parents and trashed = false" % (os.path.basename(uploadFile), parent['id'])}).GetList()
         if len(existingFolder) == 0 and (not isInitial or createRoot):
             parent = drive.CreateFile({'title': os.path.basename(uploadFile), 'parents': [{"kind": "drive#fileLink", 'id': parent['id']}],
                 "mimeType": "application/vnd.google-apps.folder"})
@@ -312,7 +312,7 @@ def copyToDrive(drive, uploadFile, createRoot, replaceFiles,
                 copyToDrive(drive, f, True, replaceFiles, ignoreFiles, parent, os.path.join(prevDir, uploadFile))
     else:
         if os.path.basename(uploadFile) not in ignoreFiles:
-            existingFiles = drive.ListFile({'q': "title = '%s' and '%s' in parents and trashed = false" % (os.path.basename(uploadFile), parent['id'])}).GetList()
+            existingFiles = drive.ListFile({'q': "title = \"%s\" and \"%s\" in parents and trashed = false" % (os.path.basename(uploadFile), parent['id'])}).GetList()
             if len(existingFiles) > 0:
                 driveFile = existingFiles[0]
             else:
@@ -327,7 +327,7 @@ def uploadFileToEbooksFolder(destFile, f):
     splitDir = destFile.split('/')
     for i, x in enumerate(splitDir):
         if i == len(splitDir)-1:
-            existingFiles = drive.ListFile({'q': "title = '%s' and '%s' in parents and trashed = false" % (x, parent['id'])}).GetList()
+            existingFiles = drive.ListFile({'q': "title = \"%s\" and \"%s\" in parents and trashed = false" % (x, parent['id'])}).GetList()
             if len(existingFiles) > 0:
                 driveFile = existingFiles[0]
             else:
@@ -335,7 +335,7 @@ def uploadFileToEbooksFolder(destFile, f):
             driveFile.SetContentFile(f)
             driveFile.Upload()
         else:
-            existingFolder = drive.ListFile({'q': "title = '%s' and '%s' in parents and trashed = false" % (x, parent['id'])}).GetList()
+            existingFolder = drive.ListFile({'q': "title = \"%s\" and \"%s\" in parents and trashed = false" % (x, parent['id'])}).GetList()
             if len(existingFolder) == 0:
                 parent = drive.CreateFile({'title': x, 'parents': [{"kind": "drive#fileLink", 'id': parent['id']}],
                     "mimeType": "application/vnd.google-apps.folder"})
