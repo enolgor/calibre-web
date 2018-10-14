@@ -54,6 +54,7 @@ def get_attachment(bookpath, filename):
     """Get file as MIMEBase message"""
     calibrepath = web.config.config_calibre_dir
     if web.ub.config.config_use_google_drive:
+        filename = os.path.basename(os.path.normpath(filename))
         df = gd.getFileFromEbooksFolder(bookpath, filename)
         if df:
             datafile = os.path.join(calibrepath, bookpath, filename)

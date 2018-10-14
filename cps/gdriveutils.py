@@ -164,7 +164,7 @@ def getFolderInFolder(parentId, folderName, drive):
     # drive = getDrive(drive)
     query=""
     if folderName:
-        query = "title = '%s' and " % folderName.replace("'", "\\'")
+        query = "title = \"%s\" and " % folderName.replace("'", "\\'")
     folder = query + "'%s' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false" % parentId
     fileList = drive.ListFile({'q': folder}).GetList()
     if fileList.__len__() == 0:
@@ -190,7 +190,7 @@ def getEbooksFolderId(drive=None):
 
 
 def getFile(pathId, fileName, drive):
-    metaDataFile = "'%s' in parents and trashed = false and title = '%s'" % (pathId, fileName.replace("'", "\\'"))
+    metaDataFile = "'%s' in parents and trashed = false and title = \"%s\"" % (pathId, fileName.replace("'", "\\'"))
 
     fileList = drive.ListFile({'q': metaDataFile}).GetList()
     if fileList.__len__() == 0:
